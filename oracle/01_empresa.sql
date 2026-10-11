@@ -1,0 +1,43 @@
+-- DDL:
+CREATE TABLE Pessoa (
+    CPF NUMBER PRIMARY KEY,
+    Nome VARCHAR2(45),
+    Sexo CHAR(1),
+    Idade NUMBER,
+    Gerente_CPF NUMBER,
+    FOREIGN KEY (Gerente_CPF) REFERENCES Pessoa(CPF)
+);
+
+CREATE TABLE Projeto (
+    Codigo NUMBER PRIMARY KEY,
+    Descricao VARCHAR2(45)
+);
+
+CREATE TABLE Aloca (
+    Projeto_Codigo NUMBER,
+    Pessoa_CPF NUMBER,
+    PRIMARY KEY (Projeto_Codigo, Pessoa_CPF),
+    FOREIGN KEY (Projeto_Codigo) REFERENCES Projeto(Codigo),
+    FOREIGN KEY (Pessoa_CPF) REFERENCES Pessoa(CPF)
+);
+
+-- POVOAMENTO:
+INSERT INTO Pessoa VALUES (123, 'Rubi',  'F', 35, NULL);
+INSERT INTO Pessoa VALUES (147, 'Maria', 'F', 42, 123);
+INSERT INTO Pessoa VALUES (258, 'Edu',   'M', 45, 147);
+INSERT INTO Pessoa VALUES (456, 'Igor',  'M', 40, 123);
+INSERT INTO Pessoa VALUES (789, 'Luiz',  'M', 38, 456);
+
+INSERT INTO Projeto VALUES (1122, 'BI');
+INSERT INTO Projeto VALUES (3344, 'GTI');
+INSERT INTO Projeto VALUES (5566, 'SIG');
+
+INSERT INTO Aloca VALUES (1122, 123);
+INSERT INTO Aloca VALUES (3344, 123);
+INSERT INTO Aloca VALUES (5566, 123);
+INSERT INTO Aloca VALUES (3344, 147);
+INSERT INTO Aloca VALUES (1122, 456);
+INSERT INTO Aloca VALUES (5566, 456);
+INSERT INTO Aloca VALUES (3344, 789);
+
+COMMIT;
